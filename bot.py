@@ -1,4 +1,4 @@
-from pyrogram import Client
+from pyrogram import Client, filters
 from pyrogram.types import ChatJoinRequest
 from dotenv import load_dotenv
 import os
@@ -10,6 +10,10 @@ API_HASH = os.environ.get("API_HASH")
 BOT_TOKEN = os.environ.get("BOT_TOKEN")
 
 app = Client("join-request-bot", api_id=API_ID, api_hash=API_HASH, bot_token=BOT_TOKEN)
+
+@app.on_message(filters.command("start"))
+async def start(client, message):
+    await message.reply_text("Hello! I'm alive and ready to approve join requests.")
 
 @app.on_chat_join_request()
 async def approve(client, request: ChatJoinRequest):
